@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import React from 'react';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const navigation = [
+  { name: 'Inicio', href: '#' },
+  { name: 'Trámites', href: '#', dropdown: true },
+  { name: 'Contacto', href: '#' },
+  { name: 'Nosotros', href: '#' }
+];
 
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <nav className="bg-[#D07024] text-white py-4 shadow-md font-serif" style={{ fontFamily: 'Garamond, serif' }}>
+      <div className="container mx-auto flex justify-between items-center px-6">
+        <div className="text-lg font-semibold">
+          <span className="text-xs block">NOTARÍAS ASOCIADAS</span>
+          <span className="text-2xl">38 y 76</span>
+        </div>
+        <div className="hidden md:flex space-x-8 text-lg">
+          {navigation.map((item) => (
+            item.dropdown ? (
+              <Menu as="div" key={item.name} className="relative">
+                <MenuButton className="hover:underline flex items-center">
+                  {item.name} <span className="ml-1">▼</span>
+                </MenuButton>
+                <MenuItems className="absolute mt-2 w-40 bg-white text-black rounded-md shadow-lg py-1">
+                  <MenuItem>
+                    <a href="#" className="block px-4 py-2 hover:bg-gray-100">Trámite 1</a>
+                  </MenuItem>
+                  <MenuItem>
+                    <a href="#" className="block px-4 py-2 hover:bg-gray-100">Trámite 2</a>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
+            ) : (
+              <a key={item.name} href={item.href} className="hover:underline">
+                {item.name}
+              </a>
+            )
+          ))}
+        </div>
+        <button className="border border-white px-4 py-2 rounded-full hover:bg-white hover:text-[#a66432] transition">
+          Iniciar sesión
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </nav>
+  );
+};
 
-export default App
+export default App;
